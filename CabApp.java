@@ -1,13 +1,13 @@
 package com.sentha;
 import java.util.*;
 import java.time.*;
-public class OlaApp
+public class CabApp
 {
-	public static void Login(long mob, String pass)
+	public static void Login(long mobile, String password)
 	{
-		String num=String.valueOf(mob);
-		int len=num.length();
-		if(len==10)
+		String number=String.valueOf(mobile);
+		int length=number.length();
+		if(length==10)
 		{
 			System.out.println("Valid Mobile Number");
 		}
@@ -15,10 +15,10 @@ public class OlaApp
 		{
 			System.out.println("Invalid Mobile Number");
 		}
-		int passLen=pass.length();
-		if(passLen>=8)
-		{
-			if(pass.equals("pass1234"))
+		int passLength=password.length();
+		if(passLength>=8)
+		{     
+			if(password.equals("pass1234"))
 				{
 					System.out.println("Valid Password");
 				}
@@ -39,20 +39,20 @@ public class OlaApp
 		System.out.println("2. MINI (Rs 15/km)");
 		System.out.println("3. PRIME (Rs 20/km)");
 	}
-	public static double priceEstimation(String cabType, double dist)
+	public static double priceEstimation(String cabType, double distance)
 	{
 		double amount=0;
 		if(cabType.equalsIgnoreCase("MICRO"))
 		{
-			amount=dist*10;
+			amount=distance*10;
 		}
 		else if(cabType.equalsIgnoreCase("MINI"))
 		{
-			amount=dist*15;
+			amount=distance*15;
 		}
 		else if(cabType.equalsIgnoreCase("PRIME"))
 		{
-			amount=dist*20;
+			amount=distance*20;
 			
 		}
 		return amount;
@@ -67,10 +67,10 @@ public class OlaApp
 		System.out.println("TOTAL: "+total);
 		return total;
 	}
-	public static void Booking(LocalDate journDate, LocalTime pickTime)
+	public static void Booking(LocalDate journeyDate, LocalTime pickTime)
 	{
 		LocalDate now = LocalDate.now();
-		if(journDate.isAfter(now) || journDate.isEqual(now))
+		if(journeyDate.isAfter(now) || journeyDate.isEqual(now))
 		{
 			System.out.println("Valid Date Format");
 		}
@@ -87,38 +87,38 @@ public class OlaApp
 			System.out.println("Invalid Time Format");
 		}
 	}
-	public static double peakHours(int hour, double tot)
+	public static double peakHours(int hour, double total)
 	{
 		double peakTotal;
 		if(hour>=17.00 && hour<=19.00)// between 5pm to 7pm
 		{
 			System.out.println("For Peak Hours : 1.25% per KM");
-			double peak=tot*0.0125;
-			System.out.println("Your Bill Amount + GST: "+tot);
-			System.out.println("Your Peak Hours Charge: "+peak);
-		    peakTotal=tot+peak;
-			System.out.println("TOTAL charges for peak hour: "+peakTotal);
+			double peakHourAmount=total*0.0125;
+			System.out.println("Your Bill Amount + GST Rs. : "+total);
+			System.out.println("Your Peak Hours Charge: Rs. "+peakHourAmount);
+		    peakTotal=total+peakHourAmount;
+			System.out.println("TOTAL charges for peak hour Rs. : "+peakTotal);
 		}
 		else
 		{
 			System.out.println("CAB is booked in normal hours");
-			peakTotal=tot;
+			peakTotal=total;
 		}
 		return peakTotal;
 	}
-	public static double seniorCitizen(int yr, double amt)
+	public static double seniorCitizen(int yr, double amount)
 	{
 		int age=2021-yr;
 		double discount;
 		if(age>=50)
 		{
 			System.out.println("Senior Citizen");
-			discount=amt*0.5;
-			System.out.println("Total bill after consession:"+discount);
+			discount=amount*0.5;
+			System.out.println("Total bill after consession: Rs."+discount);
 		}
 		else
 		{
-			discount=amt;
+			discount=amount;
 		}
 		return discount;	
 	}
@@ -127,10 +127,10 @@ public class OlaApp
 		//Level 1
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter Mobile Number");
-		long mobNo=in.nextLong();
+		long mobileNumber=in.nextLong();
 		System.out.println("Enter Password");
 		String password=in.next();
-		Login(mobNo,password);
+		Login(mobileNumber,password);
 		//LEVEL 2
 		cabTypes();
 		//LEVEL 3
@@ -141,7 +141,7 @@ public class OlaApp
 		double bill=priceEstimation(type,distance);
 		System.out.println("Your Total Bill Amount Rs. "+bill);
 		//LEVEL 4
-		double ttl=GST(bill);
+		double total=GST(bill);
 		//LEVEL 5
 		System.out.println("Available Cabs");
 		System.out.println("1. MICRO");
@@ -153,17 +153,17 @@ public class OlaApp
 		String Jdate=in.next();
 		LocalDate journeyDate = LocalDate.parse(Jdate);
 		System.out.println("Enter the Journey Time in HH:MM Format");
-		String PTime=in.next();
-		LocalTime pickupTime = LocalTime.parse(PTime);
+		String pickTime=in.next();
+		LocalTime pickupTime = LocalTime.parse(pickTime);
 		Booking(journeyDate,pickupTime);
 		//LEVEL 6
-		int hr=pickupTime.getHour();
-		double val=peakHours(hr,ttl);
+		int hour=pickupTime.getHour();
+		double value=peakHours(hour,total);
 		//LEVEl 7
 		System.out.println("Enter you Date of Birth in YYYY-MM-DD Format");
 		String dob=in.next();
 		LocalDate dateofbirth = LocalDate.parse(dob);
 		int year=dateofbirth.getYear();
-		seniorCitizen(year,val);
+		seniorCitizen(year,value);
 	}
 }
